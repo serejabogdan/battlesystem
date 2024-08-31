@@ -8,15 +8,15 @@ public class Warrior extends Fighter {
   @Override
   public void performAction(Fighter fighter) {
     System.out.println(name + " attacks " + fighter.getName());
-    int damage = attack;
-    fighter.takeDamage(attack);
+    int damage = characteristics.getAttack();
+    fighter.takeDamage(damage);
     System.out.println(fighter.getName() + " takes " + damage + " damage");
   }
 
   @Override
-  public void defend() {
+  public void buffDefense() {
     System.out.println(name + " got defend buff");
-    defense += 5;
-    System.out.println(name + "'s has " + getDefense() + " defense");
+    characteristics.setDefense(characteristics.getDefense() + 5);
+    System.out.println(name + "'s has " + characteristics.getDefense() + " defense");
   }
 }

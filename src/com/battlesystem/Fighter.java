@@ -1,59 +1,63 @@
 package com.battlesystem;
 
+import java.security.SecureRandom;
+
 public abstract class Fighter {
   protected String name;
-  protected int health;
-  protected int attack;
-  protected int defense;
+  protected FighterCharacteristics characteristics;
+  private SecureRandom random;
 
   public Fighter(String name, int health, int attack, int defense) {
     this.name = name;
-    this.health = health;
-    this.attack = attack;
-    this.defense = defense;
+    this.characteristics = new FighterCharacteristics(health, attack, defense);
+    this.random = new SecureRandom();
   }
 
   public abstract void performAction(Fighter target);
 
-  public abstract void defend();
+  public abstract void buffDefense();
 
   public String getName() {
     return name;
   }
 
-  public int getDefense() {
-    return defense;
-  }
-
   private void defend(int damage) {
-    if (defense > 0) {
+    int currentDefense = characteristics.getDefense();
+    currentDefense -= damage;
 
-      defense -= damage;
-
-      if (defense < 0) {
-        health += defense;
-        defense = 0;
-      }
+    if (currentDefense < 0) {
+      characteristics.setHealth(characteristics.getHealth() + currentDefense);
+      characteristics.setDefense(0);
+    } else {
+      characteristics.setDefense(currentDefense);
     }
   }
 
   public void takeDamage(int damage) {
-    if (defense > 0) {
+    if (characteristics.getDefense() > 0) {
       defend(damage);
     } else {
-      health -= damage;
+      characteristics.setHealth(characteristics.getHealth() - damage);
     }
 
-    if (health < 0) {
-      health = 0;
+    if (characteristics.getHealth() < 0) {
+      characteristics.setHealth(0);
     }
   }
 
   public boolean isAlive() {
-    return health > 0;
+    return characteristics.getHealth() > 0;
   }
 
-  public String getCharacteristics() {
-    return name + "'s characteristics: " + "health: " + health + "; attack: " + attack + "; defense: " + defense;
+  public void performTurn(Fighter defender) {
+    if (random.nextBoolean()) {
+      performAction(defender);
+    } else {
+      buffDefense();
+    }
+  }
+
+  public FighterCharacteristics getCharacteristics() {
+    return characteristics;
   }
 }
