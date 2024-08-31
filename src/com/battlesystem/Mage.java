@@ -1,10 +1,10 @@
 package com.battlesystem;
 
-public class Warrior extends Fighter {
+public class Mage extends Fighter {
   private FighterMessenger messenger;
 
-  public Warrior(String name, FighterMessenger messenger) {
-    super(name, "warrior", 100, 15, 10);
+  public Mage(String name, FighterMessenger messenger) {
+    super(name, "mage", 50, 5, 0);
     this.messenger = messenger;
   }
 
@@ -17,7 +17,7 @@ public class Warrior extends Fighter {
 
   @Override
   public void buffDefense() {
-    characteristics.setDefense(characteristics.getDefense() + 5);
+    characteristics.setDefense(characteristics.getDefense() + 16);
     messenger.announceBuffDefense(this);
   }
 }
