@@ -17,6 +17,10 @@ public abstract class Fighter {
   public abstract void performAction(Fighter target);
 
   public abstract void buffDefense();
+  
+  public void setMediator(Mediator mediator) {
+      this.mediator = mediator;
+  }
 
   public String getName() {
     return name;
@@ -63,5 +67,5 @@ public abstract class Fighter {
     return characteristics;
   }
 
-  public abstract String getFighterClass();
+  public abstract FighterClass getFighterClass();
 }

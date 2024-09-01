@@ -19,7 +19,7 @@ public class Mage extends Fighter {
   }
 
   @Override
-  public String getFighterClass() {
-    return "mage";
+  public FighterClass getFighterClass() {
+    return FighterClass.MAGE;
   }
 }

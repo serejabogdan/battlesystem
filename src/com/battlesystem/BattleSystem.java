@@ -7,6 +7,9 @@ public class BattleSystem implements Mediator {
   public BattleSystem(Fighter player1, Fighter player2) {
     this.player1 = player1;
     this.player2 = player2;
+    
+    player1.setMediator(this);
+    player2.setMediator(this);
   }
 
   public void startBattle() {

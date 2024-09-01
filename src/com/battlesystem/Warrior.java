@@ -19,7 +19,7 @@ public class Warrior extends Fighter {
   }
 
   @Override
-  public String getFighterClass() {
-    return "warrior";
+  public FighterClass getFighterClass() {
+    return FighterClass.WARRIOR;
   }
 }
