@@ -1,10 +1,7 @@
 package com.battlesystem;
 
+import com.battlesystem.MediatorEvent.MediatorEvent;
+
 public interface Mediator {
-  void notifyAttack(Fighter attacker, Fighter defender, int damage);
-  void notifyBuffDefense(Fighter fighter);
-  void notifyDeath(Fighter fighter);
-  void announceBattleStart();
-  void displaySeparator();
-  void displayFighterCharacteristics(Fighter fighter);
+  void notify(Fighter fighter, MediatorEvent event);
 }

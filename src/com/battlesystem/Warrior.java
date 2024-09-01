@@ -9,13 +9,11 @@ public class Warrior extends Fighter {
   public void performAction(Fighter fighter) {
     int damage = characteristics.getAttack();
     fighter.takeDamage(damage);
-    mediator.notifyAttack(this, fighter, damage);
   }
 
   @Override
   public void buffDefense() {
     characteristics.setDefense(characteristics.getDefense() + 5);
-    mediator.notifyBuffDefense(this);
   }
 
   @Override

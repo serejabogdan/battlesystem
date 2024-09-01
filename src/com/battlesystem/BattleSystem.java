@@ -1,24 +1,31 @@
 package com.battlesystem;
 
+import com.battlesystem.MediatorEvent.AttackMediatorEvent;
+import com.battlesystem.MediatorEvent.VictoryMediatorEvent;
+import com.battlesystem.MediatorEvent.DefenseBuffMediatorEvent;
+import com.battlesystem.MediatorEvent.MediatorEvent;
+
 public class BattleSystem implements Mediator {
   private Fighter player1;
   private Fighter player2;
+  private BattleAnnouncer announcer;
 
-  public BattleSystem(Fighter player1, Fighter player2) {
+  public BattleSystem(Fighter player1, Fighter player2, BattleAnnouncer announcer) {
     this.player1 = player1;
     this.player2 = player2;
-    
+    this.announcer = announcer;
+
     player1.setMediator(this);
     player2.setMediator(this);
   }
 
   public void startBattle() {
-    displayFighterCharacteristics(player1);
-    displayFighterCharacteristics(player2);
+    announcer.showFighterCharacteristics(player1);
+    announcer.showFighterCharacteristics(player2);
 
-    displaySeparator();
-    announceBattleStart();
-    displaySeparator();
+    announcer.displaySeparator();
+    announcer.startBattle();
+    announcer.displaySeparator();
 
     while (player1.isAlive() && player2.isAlive()) {
       player1.performTurn(player2);
@@ -26,46 +33,20 @@ public class BattleSystem implements Mediator {
         player2.performTurn(player1);
       }
 
-      displayFighterCharacteristics(player1);
-      displayFighterCharacteristics(player2);
-      displaySeparator();
+      announcer.showFighterCharacteristics(player1);
+      announcer.showFighterCharacteristics(player2);
+      announcer.displaySeparator();
     }
   }
 
   @Override
-  public void notifyAttack(Fighter attacker, Fighter defender, int damage) {
-    System.out.println(
-        attacker.name + " [" + attacker.getFighterClass() + "] attacks " + attacker.getName() + "! "
-            + defender.getName() + " takes " + damage + " damage");
-  }
-
-  @Override
-  public void notifyBuffDefense(Fighter fighter) {
-    System.out.println(
-        fighter.name + " [" + fighter.getFighterClass() + "] got defend buff! " + fighter.name + "'s has "
-            + fighter.characteristics.getDefense() + " defense");
-  }
-
-  @Override
-  public void notifyDeath(Fighter fighter) {
-    System.out.println(fighter.name + " [" + fighter.getFighterClass() + "] is died.");
-  }
-  
-  @Override
-  public void announceBattleStart() {
-    System.out.println("Fight begins.");
-  }
-  
-  @Override
-  public void displaySeparator() {
-    System.out.println();
-  }
-
-  public void displayFighterCharacteristics(Fighter fighter) {
-    System.out.println(
-        fighter.getName() + " [" + fighter.getFighterClass() + "] characteristics: " +
-            "health: " + fighter.getCharacteristics().getHealth() +
-            "; attack: " + fighter.getCharacteristics().getAttack() +
-            "; defense: " + fighter.getCharacteristics().getDefense());
+  public void notify(Fighter fighter, MediatorEvent event) {
+    if (event instanceof AttackMediatorEvent attackEvent) {
+      announcer.attack(fighter, attackEvent.getDefender());
+    } else if (event instanceof DefenseBuffMediatorEvent) {
+      announcer.applyBuffDefense(fighter);
+    } else if (event instanceof VictoryMediatorEvent) {
+      announcer.victory(fighter);
+    }
   }
 }

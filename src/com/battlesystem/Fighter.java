@@ -2,6 +2,10 @@ package com.battlesystem;
 
 import java.security.SecureRandom;
 
+import com.battlesystem.MediatorEvent.VictoryMediatorEvent;
+import com.battlesystem.MediatorEvent.AttackMediatorEvent;
+import com.battlesystem.MediatorEvent.DefenseBuffMediatorEvent;
+
 public abstract class Fighter {
   protected String name;
   protected FighterCharacteristics characteristics;
@@ -17,9 +21,9 @@ public abstract class Fighter {
   public abstract void performAction(Fighter target);
 
   public abstract void buffDefense();
-  
+
   public void setMediator(Mediator mediator) {
-      this.mediator = mediator;
+    this.mediator = mediator;
   }
 
   public String getName() {
@@ -47,7 +51,6 @@ public abstract class Fighter {
 
     if (characteristics.getHealth() < 0) {
       characteristics.setHealth(0);
-      mediator.notifyDeath(this);
     }
   }
 
@@ -58,8 +61,14 @@ public abstract class Fighter {
   public void performTurn(Fighter defender) {
     if (random.nextBoolean()) {
       performAction(defender);
+      mediator.notify(this, new AttackMediatorEvent(defender));
     } else {
       buffDefense();
+      mediator.notify(this, new DefenseBuffMediatorEvent());
+    }
+    
+    if (!defender.isAlive()) {
+      mediator.notify(this, new VictoryMediatorEvent());
     }
   }
 

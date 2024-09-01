@@ -12,7 +12,7 @@ To compile and run this project, follow these steps:
 1. Navigate to the project's root directory.
 2. Run the following command to compile the Java files:
 
-The command `javac -d out src/com/battlesystem/*.java` compiles all Java files in the `src/com/battlesystem/` directory and places the compiled `.class` files in an `out` directory.
+The command `javac -d out src/com/battlesystem/*.java src/com/battlesystem/MediatorEvent/*.java` compiles all Java files in the `src/com/battlesystem/` directory and places the compiled `.class` files in an `out` directory.
 
 ### Execution
 
