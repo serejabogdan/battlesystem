@@ -5,7 +5,10 @@ public class Main {
     Fighter fighter1 = new Warrior("Moc'Ra");
     Fighter fighter2 = new Mage("Anarak");
 
-    BattleSystem battle = new BattleSystem(fighter1, fighter2, new BattleAnnouncer());
+    BattleAnnouncer battleAnnouncer = new BattleAnnouncer();
+    BattleEventVisitor eventVisitor = new BattleEventVisitor(battleAnnouncer);
+
+    BattleSystem battle = new BattleSystem(fighter1, fighter2, battleAnnouncer, eventVisitor);
     battle.startBattle();
   }
 }

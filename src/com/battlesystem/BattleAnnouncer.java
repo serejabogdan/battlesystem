@@ -19,7 +19,7 @@ public class BattleAnnouncer {
 
   public void attack(Fighter attacker, Fighter defender) {
     System.out.println(
-        attacker.name + " [" + attacker.getFighterClass() + "] attacks " + defender.getName() + "! "
+        attacker.getName() + " [" + attacker.getFighterClass() + "] attacks " + defender.getName() + "! "
             + defender.getName() + " takes " + attacker.getCharacteristics().getAttack() + " damage");
   }
 
@@ -31,5 +31,9 @@ public class BattleAnnouncer {
 
   public void victory(Fighter fighter) {
     System.out.println(fighter.name + " [" + fighter.getFighterClass() + "] is winner!");
+  }
+
+  public void message(Fighter fighter, String message) {
+    System.out.println(fighter.name + " says " + message);
   }
 }

@@ -6,7 +6,7 @@ import com.battlesystem.MediatorEvent.VictoryMediatorEvent;
 import com.battlesystem.MediatorEvent.AttackMediatorEvent;
 import com.battlesystem.MediatorEvent.DefenseBuffMediatorEvent;
 
-public abstract class Fighter {
+public abstract class Fighter extends GameComponent {
   protected String name;
   protected FighterCharacteristics characteristics;
   private SecureRandom random;
