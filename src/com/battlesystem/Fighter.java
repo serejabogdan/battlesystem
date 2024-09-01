@@ -4,13 +4,12 @@ import java.security.SecureRandom;
 
 public abstract class Fighter {
   protected String name;
-  protected String className;
   protected FighterCharacteristics characteristics;
   private SecureRandom random;
+  protected Mediator mediator;
 
-  public Fighter(String name, String className, int health, int attack, int defense) {
+  public Fighter(String name, int health, int attack, int defense) {
     this.name = name;
-    this.className = className;
     this.characteristics = new FighterCharacteristics(health, attack, defense);
     this.random = new SecureRandom();
   }
@@ -44,6 +43,7 @@ public abstract class Fighter {
 
     if (characteristics.getHealth() < 0) {
       characteristics.setHealth(0);
+      mediator.notifyDeath(this);
     }
   }
 
@@ -62,4 +62,6 @@ public abstract class Fighter {
   public FighterCharacteristics getCharacteristics() {
     return characteristics;
   }
+
+  public abstract String getFighterClass();
 }

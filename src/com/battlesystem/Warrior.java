@@ -1,23 +1,25 @@
 package com.battlesystem;
 
 public class Warrior extends Fighter {
-  private FighterMessenger messenger;
-
-  public Warrior(String name, FighterMessenger messenger) {
-    super(name, "warrior", 100, 15, 10);
-    this.messenger = messenger;
+  public Warrior(String name) {
+    super(name, 100, 15, 10);
   }
 
   @Override
   public void performAction(Fighter fighter) {
     int damage = characteristics.getAttack();
     fighter.takeDamage(damage);
-    messenger.announceAttack(this, fighter, damage);
+    mediator.notifyAttack(this, fighter, damage);
   }
 
   @Override
   public void buffDefense() {
     characteristics.setDefense(characteristics.getDefense() + 5);
-    messenger.announceBuffDefense(this);
+    mediator.notifyBuffDefense(this);
+  }
+
+  @Override
+  public String getFighterClass() {
+    return "warrior";
   }
 }
